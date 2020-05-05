@@ -14,7 +14,9 @@ const useStyles = makeStyles({
         },
         '& label.Mui-focused': {
             color: '#1e1e1e',
-            fontSize: '16px'
+            '& legend': {
+                fontSize: '10px'
+            },
         },
         '& .MuiInput-underline:after': {
             borderBottomColor: '#1e1e1e',
@@ -25,6 +27,8 @@ const useStyles = makeStyles({
             },
             '&.Mui-focused fieldset': {
                 border: '1px solid #1e1e1e',
+            }, '& legend': {
+                fontSize: '10px'
             },
         }
     }
