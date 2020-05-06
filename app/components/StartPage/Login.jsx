@@ -61,7 +61,9 @@ class Login extends React.Component {
                     password: e.target.password.value
                 };
 
-            context.props.history.push(`/user`);
+            context.props.history.push(`/profile`);
+            context.props.setUser({id: '11111', name: 'Полина', surname: 'Ходорченко',
+            number: '+375336023681', email: 'polina_98_21@mail.ru', photo: undefined});
 
             // TODO: Запрос на сервер ЛОГИН
             /*
@@ -79,7 +81,8 @@ class Login extends React.Component {
                     context.setState({errors: data});
                 }
                 else {
-                    context.props.history.push(`/user`);
+                    context.props.setUser(data[0].user);
+                    context.props.history.push(`/profile`);
                 }
             })
                 .catch(function (err) {

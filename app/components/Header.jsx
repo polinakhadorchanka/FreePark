@@ -1,8 +1,12 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 
-export default class Header extends React.Component {
+import UserMenu from './UserMenu.jsx';
+import {connect} from "react-redux";
+import actions from "../actions.jsx";
+
+class Header extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -10,16 +14,34 @@ export default class Header extends React.Component {
     render() {
         return (
             <header>
-                <div className='column' style={{width: '650px'}}>
-                    <Link className='logoLink' to='/'>
-                        <DriveEtaIcon className='logo'/>
-                        <span className='title'>FreePark</span>
-                    </Link>
-                </div>
-                <div className='column' style={{width: '360px'}}>
-
+                <div className='container'>
+                    <div className='column'>
+                        <Link className='logoLink' to='/'>
+                            <DriveEtaIcon className='logo'/>
+                            <span className='title'>FreePark</span>
+                        </Link>
+                    </div>
+                    <div className='column'>
+                        {this.props.store.user ? <UserMenu/> : undefined}
+                    </div>
                 </div>
             </header>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        store: state
+    };
+}
+
+const Connected = withRouter(connect(mapStateToProps, actions) (Header));
+
+class Export extends React.Component {
+    render(){
+        return (<Connected/>);
+    }
+}
+
+export default Export;

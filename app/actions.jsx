@@ -1,7 +1,15 @@
-let addVacancy = function (vacancy, filter) {
+let setUser = function (user) {
     return {
-        type: "ADD_VACANCY",
-        filter: filter,
-        vacancy
+        type: "SET_USER",
+        user: user,
     }
 };
+
+let addAuto = function (auto) {
+    return {
+        type: "ADD_AUTO",
+        auto: auto,
+    }
+};
+
+module.exports = {setUser, addAuto};

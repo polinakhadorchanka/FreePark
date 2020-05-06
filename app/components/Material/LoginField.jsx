@@ -31,15 +31,45 @@ const useStyles = makeStyles({
                 fontSize: '10px'
             },
         }
+    },
+    autoForm: {
+        width: '100%',
+        marginRight: '10px',
+        '& input': {
+            fontSize: '14px'
+        },
+        '& label': {
+            fontSize: '14px'
+        },
+        '& label.Mui-focused': {
+            color: '#1e1e1e',
+            '& legend': {
+                fontSize: '10px'
+            },
+        },
+        '& .MuiInput-underline:after': {
+            borderBottomColor: '#1e1e1e',
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                border: '1px solid CF3F3B',
+            },
+            '&.Mui-focused fieldset': {
+                border: '1px solid #1e1e1e',
+            }, '& legend': {
+                fontSize: '10px'
+            },
+        }
     }
 });
 
 export default function LoginTextField(props) {
     const classes = useStyles();
 
-    return <TextField variant="outlined" className={classes.default} required={props.required} type={props.type}
+    return <TextField variant="outlined" className={props.cl === 'autoForm' ? classes.autoForm : classes.default}
+                      required={props.required} type={props.type}
                       error={props.error} helperText={props.helperText} size="small"
                       label={props.label} name={props.name} maxLength={props.maxLength}
-                      id={props.id} onChange={props.handleChange}
+                      id={props.id} onChange={props.handleChange} value={props.value}
     />
 }

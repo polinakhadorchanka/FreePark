@@ -1,4 +1,7 @@
 import React from 'react';
+import {withRouter} from "react-router";
+import {connect} from "react-redux";
+import actions from "../actions.jsx";
 
 import Info from './StartPage/Info.jsx';
 import Login from './StartPage/Login.jsx';
@@ -14,9 +17,12 @@ let text = [
     </div>
 ];
 
-export default class StartPage extends React.Component {
+class StartPage extends React.Component {
     constructor(props) {
         super(props);
+
+        if(localStorage.getItem('user'))
+            props.history.push(`/profile`);
     }
 
     render() {
@@ -34,3 +40,19 @@ export default class StartPage extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        store: state
+    };
+}
+
+const Connected = withRouter(connect(mapStateToProps, actions) (StartPage));
+
+class Export extends React.Component {
+    render(){
+        return (<Connected/>);
+    }
+}
+
+export default Export;
