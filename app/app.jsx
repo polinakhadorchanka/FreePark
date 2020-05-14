@@ -11,6 +11,9 @@ import StartPage from './components/StartPage.jsx';
 import Header from './components/Header.jsx';
 import Profile from './components/Profile.jsx';
 import EditProfile from "./components/Profile/EditProfile.jsx";
+import Help from "./components/Help.jsx";
+import MyReservation from "./components/MyReservation.jsx";
+import Reservation from "./components/Reservation.jsx";
 
 let store = createStore(reducer);
 let history = createBrowserHistory();
@@ -25,6 +28,9 @@ ReactDOM.render(
                 <Switch>
                     <Route exact path="/profile" component={Profile}/>
                     <Route exact path="/edit-profile" component={EditProfile}/>
+                    <Route exact path="/help" component={Help}/>
+                    <Route exact path="/reservation" component={Reservation}/>
+                    <Route exact path="/my-reservation" component={MyReservation}/>
                     <Route exact path="/" component={StartPage}/>
                 </Switch>
             </div>

@@ -293,3 +293,30 @@ div #userPhoto {
 .form-group:hover {
     color: #fff;
 }
+
+rect {
+    fill: #1A4F55;
+    cursor: pointer;
+    outline: none;
+}
+
+rect:hover, rect:focus {
+    fill: #14363c;
+}
+
+.parkSchema rect {
+    fill: #1A4F55;
+    cursor: default;
+}
+
+.parkSchema rect:hover, .parkSchema rect:focus {
+    fill: #1A4F55;
+}
+
+.reservationInfo a {
+    color: #14363c
+}
+
+.reservationInfo a:hover {
+    text-decoration: underline;
+}

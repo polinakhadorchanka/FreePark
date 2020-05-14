@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import actions from "../../actions.jsx";
 import DeleteIcon from '@material-ui/icons/Delete';
+import MyDialog from "../Material/MyDialog.jsx";
 
 class Autos extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Autos extends React.Component {
         this.removeAuto = this.removeAuto.bind(this);
     }
 
-    async removeAuto(auto) {
+    async removeAuto(e, auto) {
         let context = this,
             autos = await context.props.store.autos.filter((el) => el.id !== auto.id);
 
@@ -80,8 +81,9 @@ class Auto extends React.Component {
                 <td>{this.props.auto.model}</td>
                 <td>{this.props.auto.number}</td>
                 <td style={{border: 'none', backgroundColor: 'transparent', textAlign: 'left'}}>
-                    <div onClick={() => this.props.removeAuto(this.props.auto)}><DeleteIcon className='deleteAuto'/></div>
-                </td>
+                    <MyDialog button={<DeleteIcon className='deleteAuto'/>}
+                              message={'Вы не сможете в последующем отменить это действие'}
+                              agree={this.props.removeAuto} id={this.props.auto}/></td>
             </tr>
         );
     }

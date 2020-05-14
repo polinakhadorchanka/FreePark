@@ -36,7 +36,8 @@ class EditProfile extends React.Component {
                     name : e.target.name.value,
                     surname : e.target.surname.value,
                     number : e.target.number.value,
-                    email : e.target.email.value
+                    email : e.target.email.value,
+                    photo: this.props.store.user.photo
                 };
 
 
@@ -48,7 +49,7 @@ class EditProfile extends React.Component {
             /*
             fetch(`/user?userId=${context.props.store.user.id}`,
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'

@@ -20,7 +20,27 @@ class Profile extends React.Component {
             user.photo = URL.createObjectURL(f);
             await this.props.setUser(user);
 
-            //TODO: Запрос на сервер ИЗМЕНИТЬ ФОТО
+            //TODO: Запрос на сервер ИЗМЕНИТЬ ФОТО (по сути инфы о юзере)
+            /*
+            fetch(`/user?userId=${context.props.store.user.id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                .then(response => response.json()).then(async function (data) {
+                if(data[0].errorCode !== 0) {
+                    throw 'Не удалось изменить фотографию';
+                }
+                else await this.props.setUser(user);
+            })
+                .catch(function (err) {
+                    console.log('EXP: ', err);
+                });
+            */
         }
     }
 
