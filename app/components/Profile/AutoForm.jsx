@@ -22,25 +22,6 @@ class Autos extends React.Component {
         this.onModelChange = this.onModelChange.bind(this);
         this.onNumberChange = this.onNumberChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getAutos = this.getAutos.bind(this);
-
-        if(props.store.autos.length === 0) this.getAutos();
-    }
-
-    getAutos() {
-        let context = this;
-
-        // TODO: Запрос на сервер ПОЛУЧИТЬ СПИСОК АВТО
-        /*
-        fetch(`/autos?userId=${this.props.store.user.id}`)
-            .then(response => response.json()).then(function (data) {
-                    context.props.addAuto(context.props.store.autos.concat(data))
-        })
-            .catch(function (err) {
-                console.log('EXP: ', err);
-            });
-
-         */
     }
 
     onMarkChange(e) {
@@ -72,7 +53,7 @@ class Autos extends React.Component {
 
     onNumberChange(e) {
         let val = e.target.value,
-            regexp = /^[0-9a-zA-Zа-яА-Я ]{1,10}$/,
+            regexp = /^[0-9a-zA-Zа-яА-Я\- ]{1,10}$/,
             errors = this.state.errors.filter((el) => el.errorCode !== 3);
 
         if(regexp.test(val))
@@ -95,12 +76,7 @@ class Autos extends React.Component {
                     number: e.target.number.value,
                 };
 
-            context.props.addAuto(await context.props.store.autos.concat(
-                {id: x++, mark: obj.mark, model: obj.model, number: obj.number}));
-            document.autoForm.reset();
-
             // TODO: Запрос на сервер ДОБАВИТЬ АВТО
-            /*
             fetch(`/autos?userId=${context.props.store.user.id}`,
                 {
                     method: 'POST',
@@ -110,19 +86,19 @@ class Autos extends React.Component {
                     },
                     body: JSON.stringify(obj)
                 })
-                .then(response => response.json()).then(function (data) {
-                if (data[0] && data[0].errorMessage !== null) {
+                .then(response => response.json()).then(async function (data) {
+                if (data[0] && data[0].errorCode > 0) {
                     context.setState({errors: data});
                 }
                 else {
-                    context.props.addAuto(await context.props.store.autos.concat(data[0].auto));
+                    console.log(data);
+                    await context.props.addAuto(context.props.store.autos.concat(data[0].auto));
                     document.autoForm.reset();
                 }
             })
                 .catch(function (err) {
                     console.log('EXP: ', err);
                 });
-            */
         }
     }
 

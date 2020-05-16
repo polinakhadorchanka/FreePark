@@ -21,8 +21,6 @@ class MyMap extends React.Component {
         if(!this.props.store.parkXY) {
             let context = this;
 
-            // TODO: Запрос на сервер ПОЛУЧИТЬ КООРДИНАТЫ ПАРКОВКИ
-            /*
             fetch(`/parkXY`)
                 .then(response => response.json()).then(function (data) {
                 context.props.setParkXY(data.x + ' ' + data.y);
@@ -30,26 +28,34 @@ class MyMap extends React.Component {
                 .catch(function (err) {
                     console.log('EXP: ', err);
                 });
-             */
         }
     }
 
     render() {
-        let x = this.props.store.parkXY.split(' ')[0],
-            y = this.props.store.parkXY.split(' ')[1];
+        if(this.props.store.parkXY !== undefined) {
+            let x = this.props.store.parkXY.split(' ')[0],
+                y = this.props.store.parkXY.split(' ')[1];
 
-        return (
-            <div className='block' style={{width:'780px', marginRight: '0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <YMaps>
-                    <div width='50%'>
-                        Описание
-                    </div>
-                    <Map defaultState={{ center: [x, y], zoom: 15 }} width='50%'>
-                        <Placemark defaultGeometry={[x, y]} />
-                    </Map>
-                </YMaps>
-            </div>
-        );
+            return (
+                <div className='block' style={{
+                    width: '780px',
+                    marginRight: '0',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}>
+                    <YMaps>
+                        <div width='50%'>
+                            Описание
+                        </div>
+                        <Map defaultState={{center: [x, y], zoom: 15}} width='50%'>
+                            <Placemark defaultGeometry={[x, y]}/>
+                        </Map>
+                    </YMaps>
+                </div>
+            );
+        }
+        else return <div></div>;
     }
 }
 

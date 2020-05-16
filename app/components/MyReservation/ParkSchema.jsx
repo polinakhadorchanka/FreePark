@@ -28,12 +28,17 @@ class ParkSchema extends React.Component {
 
         if(this.props.store.parkSchema !== undefined)
             return (
-                <svg width={this.props.store.parkSchema.w*ratio+50} height={this.props.store.parkSchema.h*ratio}>
+                <svg width={this.props.store.parkSchema.width*this.props.store.parkSchema.ratio}
+                     height={this.props.store.parkSchema.height*this.props.store.parkSchema.ratio}>
                     {
-                        this.props.store.parkSchema.arrays.map(function (el, index) {
+                        this.props.store.parkSchema.places.map(function (el) {
                             return (
-                                <ParkingPlace index={index} setFocusElement={context.setFocusElement} key={index}
-                                              x={el[0]*ratio+50} y={el[1]*ratio} w={el[2]*ratio} h={el[3]*ratio}/>
+                                <ParkingPlace setFocusElement={context.setFocusElement} key={el.number}
+                                              x={el.x*context.props.store.parkSchema.ratio} num={el.number}
+                                              y={el.y*context.props.store.parkSchema.ratio}
+                                              w={el.width*context.props.store.parkSchema.ratio}
+                                              h={el.height*context.props.store.parkSchema.ratio}
+                                              rotate={el.angle} state={el.state} id={el.id}/>
                             );
                         })
                     }
@@ -50,17 +55,15 @@ class ParkingPlace extends React.Component {
 
     render() {
         return (
-            <g style={this.props.index < 6 ? {transform: 'rotate(45deg)', margin: '20px',
-                    transformOrigin: `${this.props.x+this.props.w/2}px ${this.props.y+this.props.h/2}px 0`} :
-                {transform: 'rotate(315deg)',
-                    transformOrigin: `${this.props.x+this.props.w/2}px ${this.props.y+this.props.h/2}px 0`}}>
-                <rect
-                    id={'el'+this.props.index} x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h}>
+            <g style={{transform: `rotate(${this.props.rotate}deg)`,
+                transformOrigin: `${this.props.x}px ${this.props.y}px 0`}}>
+                <rect style={{fill: '#686868', cursor: 'default'}}
+                      id={'el'+this.props.index} x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h}>
                 </rect>
-                <text style={{fill: '#C8C8C8'}}
-                      x={this.props.index+1 < 10 ? this.props.x+this.props.w*0.45 : this.props.x+this.props.w*0.32}
+                <text style={{fill: '#C8C8C8', fontSize: '10px'}}
+                      x={this.props.index+1 < 10 ? this.props.x+this.props.w*0.4 : this.props.x+this.props.w*0.35}
                       y={this.props.y+this.props.h*0.55}>
-                    {this.props.index+1}
+                    {this.props.num}
                 </text>
             </g>
         );

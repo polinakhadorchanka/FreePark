@@ -298,6 +298,8 @@ rect {
     fill: #1A4F55;
     cursor: pointer;
     outline: none;
+    stroke-width: 1;
+    stroke: rgb(0,0,0)
 }
 
 rect:hover, rect:focus {
@@ -311,6 +313,8 @@ rect:hover, rect:focus {
 
 .parkSchema rect:hover, .parkSchema rect:focus {
     fill: #1A4F55;
+    stroke-width: 1;
+    stroke: rgb(0,0,0)
 }
 
 .reservationInfo a {

@@ -18,10 +18,8 @@ class Profile extends React.Component {
         if (f) {
             let user = this.props.store.user;
             user.photo = URL.createObjectURL(f);
-            await this.props.setUser(user);
 
             //TODO: Запрос на сервер ИЗМЕНИТЬ ФОТО (по сути инфы о юзере)
-            /*
             fetch(`/user?userId=${context.props.store.user.id}`,
                 {
                     method: 'POST',
@@ -40,7 +38,6 @@ class Profile extends React.Component {
                 .catch(function (err) {
                     console.log('EXP: ', err);
                 });
-            */
         }
     }
 

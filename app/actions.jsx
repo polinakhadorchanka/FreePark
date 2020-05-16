@@ -19,10 +19,11 @@ let setParkXY = function (xy) {
     }
 };
 
-let setParkSchema = function (schema) {
+let setParkSchema = function (schema, ratio) {
     return {
         type: "SET_PARK_SCHEMA",
         schema: schema,
+        ratio: ratio
     }
 };
 
@@ -33,4 +34,25 @@ let setReservation = function (reservation) {
     }
 };
 
-module.exports = {setUser, addAuto, setParkXY, setParkSchema, setReservation};
+let setFocus = function (focus) {
+    return {
+        type: "SET_FOCUS",
+        focus: focus,
+    }
+};
+
+let setPrice = function (price) {
+    return {
+        type: "SET_PRICE",
+        price: price,
+    }
+};
+
+let setFreeAutos = function (autos) {
+    return {
+        type: "SET_FREE_AUTOS",
+        autos: autos,
+    }
+};
+
+module.exports = {setUser, addAuto, setParkXY, setParkSchema, setReservation, setFocus, setPrice, setFreeAutos};

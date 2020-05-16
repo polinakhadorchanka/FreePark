@@ -6,7 +6,7 @@ import actions from "../../actions.jsx";
 import LoginField from "../Material/LoginField.jsx";
 import LoginButton from "../Material/LoginButton.jsx";
 
- class Registration extends React.Component {
+class Registration extends React.Component {
     constructor(props) {
         super(props);
 
@@ -29,51 +29,43 @@ import LoginButton from "../Material/LoginButton.jsx";
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-     handleSubmit(e) {
-         e.preventDefault();
+    handleSubmit(e) {
+        e.preventDefault();
 
-         if(this.state.errors.length === 0) {
-             let context = this,
-                 obj = {
-                     name : e.target.name.value,
-                     surname : e.target.surname.value,
-                     number : e.target.number.value,
-                     password : e.target.password.value,
-                     email : e.target.email.value
-                 };
+        if(this.state.errors.length === 0) {
+            let context = this,
+                obj = {
+                    name : e.target.name.value,
+                    surname : e.target.surname.value,
+                    number : e.target.number.value,
+                    password : e.target.password.value,
+                    email : e.target.email.value
+                };
 
-
-             context.props.history.push('/profile');
-             context.props.setUser({id: '11111', name: 'Полина', surname: 'Ходорченко',
-                 number: '+375336023681', email: 'polina_98_21@mail.ru', photo: undefined});
-
-             // TODO: Запрос на сервер РЕГИСТРАЦИЯ
-             /*
-             fetch(`/registration`,
-                 {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                         'Accept': 'application/json'
-                     },
-                     body: JSON.stringify(obj)
-                 })
-                 .then(response => response.json()).then(function (data) {
-                 if(data[0].errorCode !== 0) {
-                     context.setState({errors : data});
-                 }
-                 else {
-
-                    context.props.setUser(data[0].user);
-                     context.props.history.push('/profile');
-                 }
-             })
-                 .catch(function (err) {
-                     console.log('EXP: ', err);
-                 });
-             */
-         }
-     }
+            // TODO: Запрос на сервер РЕГИСТРАЦИЯ
+            fetch(`/registration`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                .then(response => response.json()).then(async function (data) {
+                if(data[0].errorCode !== 0) {
+                    context.setState({errors : data});
+                }
+                else {
+                    await context.props.setUser(data[0].user);
+                    context.props.history.push('/profile');
+                }
+            })
+                .catch(function (err) {
+                    console.log('EXP: ', err);
+                });
+        }
+    }
 
     onNameChange(e) {
         let val = e.target.value,
@@ -133,12 +125,12 @@ import LoginButton from "../Material/LoginButton.jsx";
 
     onPasswordChange(e) {
         let val = e.target.value,
-            regexp = /^[a-zA-Z0-9-_\.]{6,25}$/,
+            regexp = /^[a-zA-Zа-яА-Я0-9]{6,25}$/,
             errors = this.state.errors.filter((el) => el.errorCode !== 15 && el.errorCode !== 16);
 
         if(val.length < 6) {
             errors.push({errorCode: 15, errorMessage:
-                    'Пароль должен быть не короче 6 символов и состоять из букв латинского алфавита и/или цифр'});
+                    'Пароль должен быть не короче 6 символов и состоять из букв и/или цифр'});
             this.setState({password : val,
                 errors: errors});
         }
@@ -162,6 +154,9 @@ import LoginButton from "../Material/LoginButton.jsx";
             this.setState({confirm : val,
                 errors: errors});
         }
+        else {
+            this.setState({confirm : val, errors: errors});
+        }
     }
 
     render() {
@@ -170,7 +165,7 @@ import LoginButton from "../Material/LoginButton.jsx";
                 <h1>Впервые на FreePark?</h1>
                 <h4>Зарегистрируйтесь</h4><br/>
 
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <LoginField label='Ваше имя' id='nameTextField' required={true} name='name'
                                 type='text' handleChange={this.onNameChange}
                                 error={this.state.errors.filter((el) => el.errorCode === 11).length > 0}

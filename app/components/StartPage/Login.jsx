@@ -61,12 +61,7 @@ class Login extends React.Component {
                     password: e.target.password.value
                 };
 
-            context.props.history.push(`/profile`);
-            context.props.setUser({id: '11111', name: 'Полина', surname: 'Ходорченко',
-            number: '+375336023681', email: 'polina_98_21@mail.ru', photo: undefined});
-
             // TODO: Запрос на сервер ЛОГИН
-            /*
             fetch(`/login`,
                 {
                     method: 'POST',
@@ -76,19 +71,19 @@ class Login extends React.Component {
                     },
                     body: JSON.stringify(obj)
                 })
-                .then(response => response.json()).then(function (data) {
-                if (data[0] && data[0].errorMessage !== null) {
+                .then(response => response.json()).then(async function (data) {
+                if (data[0] && data[0].errorCode > 0) {
+                    console.log('1', data);
                     context.setState({errors: data});
                 }
                 else {
-                    context.props.setUser(data[0].user);
+                    await context.props.setUser(data[0].user);
                     context.props.history.push(`/profile`);
                 }
             })
                 .catch(function (err) {
                     console.log('EXP: ', err);
                 });
-            */
         }
     }
 

@@ -10,33 +10,41 @@ class Autos extends React.Component {
 
         this.renderAutos = this.renderAutos.bind(this);
         this.removeAuto = this.removeAuto.bind(this);
+        this.getAutos = this.getAutos.bind(this);
+
+        if(!props.store.autos) this.getAutos();
+    }
+
+    getAutos() {
+        let context = this;
+
+        // TODO: Запрос на сервер ПОЛУЧИТЬ СПИСОК АВТО
+        fetch(`/autos?userId=${this.props.store.user.id}`)
+            .then(response => response.json()).then(async function (data) {
+            await context.props.addAuto(data)
+        })
+            .catch(function (err) {
+                console.log('EXP: ', err);
+            });
+
     }
 
     async removeAuto(e, auto) {
-        let context = this,
-            autos = await context.props.store.autos.filter((el) => el.id !== auto.id);
-
-        context.props.addAuto(autos);
+        let context = this;
 
         // TODO: Запрос на сервер УДАЛЕНИЕ АВТО
-        /*
         fetch(`/autos?userId=${context.props.store.user.id}&autoId=${auto.id}`,
             {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
+                method: 'DELETE'
             })
             .then(response => response.json()).then(async function (data) {
                 if(data[0].errorCode === 0) {
-                    context.addAuto(await context.props.store.autos.filter((el) => el.id !== auto.id));
+                    context.props.addAuto(await context.props.store.autos.filter((el) => el.id !== auto.id));
                 }
             })
             .catch(function (err) {
                 console.log('EXP: ', err);
             });
-         */
     }
 
     renderAutos() {
@@ -63,7 +71,8 @@ class Autos extends React.Component {
         return (
             <div className='block' style={{width:'780px', marginRight: '0'}}>
                 <h1 style={{textAlign: 'left'}}>Мои автомобили</h1>
-                {this.props.store.autos.length > 0 ? this.renderAutos() : <h4 style={{textAlign: 'left'}}>Вы еще не добавили ни одного автомобиля</h4>}
+                {this.props.store.autos === undefined ? <h4 style={{textAlign: 'left'}}>Загрузка...</h4> :
+                    (this.props.store.autos.length > 0 ? this.renderAutos() : <h4 style={{textAlign: 'left'}}>Вы еще не добавили ни одного автомобиля</h4>)}
             </div>
         );
     }

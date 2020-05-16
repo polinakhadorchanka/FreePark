@@ -105,7 +105,10 @@ class ReservationBlock extends React.Component {
                     <div>
                         <span style={{fontWeight: 'bold'}}>Прибытие: </span><span>{this.props.info.date1}</span><br/>
                         <span style={{fontWeight: 'bold'}}>Отъезд: </span><span>{this.props.info.date2}</span><br/>
-                        <span style={{fontWeight: 'bold'}}>Место: </span><span>{this.props.info.placeNumber}</span><br/>
+                        <span style={{fontWeight: 'bold'}}>Место: </span><span>{this.props.info.placeId}</span><br/><br/>
+                        <span style={{fontWeight: 'bold'}}>Стоимость: </span><span id='price'>
+                                    {this.props.info.price} BYR
+                                    </span>
                     </div>
                     <div>
                         { this.state.open ? <a href='#' onClick={this.toggleOpen}>Закрыть схему проезда &#8593;</a> :
@@ -114,7 +117,7 @@ class ReservationBlock extends React.Component {
                 </div>
                 {this.state.open ?
                     <div className='parkSchema' style={{marginTop: '20px'}}>
-                        <ParkSchema/>
+                        <ParkSchema placeId={this.props.info.placeId}/>
                     </div>
                     : undefined}
             </div>
