@@ -5,6 +5,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import DepartureBoardIcon from '@material-ui/icons/DepartureBoard';
 import HelpIcon from '@material-ui/icons/Help';
 
+// Тут панель навигации
 export default class Navigation extends React.Component {
     constructor(props) {
         super(props);

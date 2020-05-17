@@ -5,6 +5,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import {connect} from "react-redux";
 import actions from "../actions.jsx";
 
+// Тут у нас штука с выплывающим меню, которая находится справа на шапке
 class UserMenu extends React.Component {
     constructor(props) {
         super(props);

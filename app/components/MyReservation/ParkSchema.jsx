@@ -1,31 +1,13 @@
 import React from 'react';
-import {withRouter} from "react-router";
-import {connect} from "react-redux";
-import actions from "../../actions.jsx";
 
+// Отображает схему парковки с проездом к заданному месту
 class ParkSchema extends React.Component {
     constructor(props) {
         super(props);
-
-        let placeW = props.store.parkSchema.arrays[0][2],
-            ratio = 1 / (placeW / 35);
-
-        this.state = {
-            ratio: ratio,
-            focus: undefined
-        };
-
-        this.setFocusElement = this.setFocusElement.bind(this);
     }
 
-    setFocusElement(num) {
-        this.setState({focus: num});
-    }
-
-    render() {
-        let ratio = this.state.ratio,
-            context = this;
-
+    render() { // Отрисовка компонента
+        let context = this;
         if(this.props.store.parkSchema !== undefined)
             return (
                 <svg width={this.props.store.parkSchema.width*this.props.store.parkSchema.ratio}
@@ -42,18 +24,24 @@ class ParkSchema extends React.Component {
                             );
                         })
                     }
+                    <polyline style={{fill:'none', stroke: 'black', strokeWidth: '2px',
+                        transform : `scale(${this.props.store.parkSchema.ratio},${this.props.store.parkSchema.ratio})`}}
+                        points={this.props.store.parkSchema.places.filter((el) => el.id === this.props.placeId)[0].path}>
+                    </polyline>
                 </svg>
             );
         else return <div></div>;
     }
 }
 
+
+// Данный компонент описывает конкретное парковочное место
 class ParkingPlace extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    render() {
+    render() { // Отриосвка компонента
         return (
             <g style={{transform: `rotate(${this.props.rotate}deg)`,
                 transformOrigin: `${this.props.x}px ${this.props.y}px 0`}}>
@@ -70,18 +58,4 @@ class ParkingPlace extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        store: state
-    };
-}
-
-const Connected = withRouter(connect(mapStateToProps, actions) (ParkSchema));
-
-class Export extends React.Component {
-    render(){
-        return (<Connected/>);
-    }
-}
-
-export default Export;
+export default ParkSchema;

@@ -20,6 +20,8 @@ let history = createBrowserHistory();
 
 if(!localStorage.getItem('user')) history.push('/');
 
+/* Стартовая точка приложения. В зависимости от адреса отожбражается соответсвующий компонент */
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>

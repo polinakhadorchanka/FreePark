@@ -6,6 +6,7 @@ import actions from "../../actions.jsx";
 import LoginField from "../Material/LoginField.jsx";
 import LoginButton from "../Material/LoginButton.jsx";
 
+// Форма регистрации с методами для проверки корректности
 class Registration extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,7 @@ class Registration extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(e) {
+    handleSubmit(e) { // Отправка формы. Если регистрация удалась, сразу заходим в профиль. Если нет, то ошибочки
         e.preventDefault();
 
         if(this.state.errors.length === 0) {

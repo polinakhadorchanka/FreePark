@@ -4,6 +4,7 @@ import actions from "../../actions.jsx";
 import DeleteIcon from '@material-ui/icons/Delete';
 import MyDialog from "../Material/MyDialog.jsx";
 
+// Компонент со списком автомобилей пользователя
 class Autos extends React.Component {
     constructor(props) {
         super(props);
@@ -15,11 +16,11 @@ class Autos extends React.Component {
         if(!props.store.autos) this.getAutos();
     }
 
-    getAutos() {
+    getAutos() { // Запрос к серверу для получения списка машин
         let context = this;
 
         // TODO: Запрос на сервер ПОЛУЧИТЬ СПИСОК АВТО
-        fetch(`/autos?userId=${this.props.store.user.id}`)
+        fetch(`/autos?userId=${this.props.store.user.id}&free=false`)
             .then(response => response.json()).then(async function (data) {
             await context.props.addAuto(data)
         })
@@ -29,7 +30,7 @@ class Autos extends React.Component {
 
     }
 
-    async removeAuto(e, auto) {
+    async removeAuto(e, auto) { // Запрос на удаление машины
         let context = this;
 
         // TODO: Запрос на сервер УДАЛЕНИЕ АВТО
@@ -47,7 +48,7 @@ class Autos extends React.Component {
             });
     }
 
-    renderAutos() {
+    renderAutos() { // Отриосвка списка машин
         let context = this;
 
         return (
@@ -67,7 +68,7 @@ class Autos extends React.Component {
         );
     }
 
-    render() {
+    render() { // Отрисовка блока
         return (
             <div className='block' style={{width:'780px', marginRight: '0'}}>
                 <h1 style={{textAlign: 'left'}}>Мои автомобили</h1>
@@ -78,6 +79,7 @@ class Autos extends React.Component {
     }
 }
 
+// В этом компоненте отрисовывается конкретная строка таблица (для конкретного авто
 class Auto extends React.Component {
     constructor(props) {
         super(props);

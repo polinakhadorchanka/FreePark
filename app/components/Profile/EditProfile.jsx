@@ -6,11 +6,12 @@ import Navigation from "../Navigation.jsx";
 import LoginField from "../Material/LoginField.jsx";
 import LoginButton from "../Material/LoginButton.jsx";
 
+// Компонент изменения профиля
+// Тут просто форма с 4мя полями
+// Методы для проверки корректности ввода
 class EditProfile extends React.Component {
     constructor(props) {
         super(props);
-
-        console.log(props.store.user);
 
         this.state = {
             email: props.store.user.email,
@@ -27,7 +28,7 @@ class EditProfile extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(e) {
+    handleSubmit(e) { // Отправка формы на сервер для изменения данных
         e.preventDefault();
 
         if(this.state.errors.length === 0) {
@@ -40,13 +41,7 @@ class EditProfile extends React.Component {
                     photo: this.props.store.user.photo
                 };
 
-
-            context.props.history.push('/profile');
-            context.props.setUser({id: '11111', name: obj.name, surname: obj.surname,
-                number: obj.number, email: obj.email, photo: undefined});
-
             // TODO: Запрос на сервер ИЗМЕНЕНИЕ ПРОФИЛЯ
-            /*
             fetch(`/user?userId=${context.props.store.user.id}`,
                 {
                     method: 'PUT',
@@ -68,7 +63,6 @@ class EditProfile extends React.Component {
                 .catch(function (err) {
                     console.log('EXP: ', err);
                 });
-            */
         }
     }
 

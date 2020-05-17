@@ -6,6 +6,7 @@ import UserMenu from './UserMenu.jsx';
 import {connect} from "react-redux";
 import actions from "../actions.jsx";
 
+// Это верхняя часть приложения, тут у нас логотип и все дела
 class Header extends React.Component {
     constructor(props) {
         super(props);

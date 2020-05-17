@@ -5,16 +5,17 @@ import actions from "../../actions.jsx";
 import MySelect from "../Material/MySelect.jsx";
 import LoginButton from "../Material/LoginButton.jsx";
 
+// Схема парковки для бронирования
 class ParkSchema extends React.Component {
     constructor(props) {
         super(props);
 
+        props.setFocus(undefined);
         this.setFocusElement = this.setFocusElement.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
-    async handleSubmit(e) {
+    async handleSubmit(e) { // Отправляем запрос на сервер, чтобы добавить новую бронь
         e.preventDefault();
 
         let context = this,
@@ -28,11 +29,8 @@ class ParkSchema extends React.Component {
                 price: context.props.store.price
             };
 
-        context.props.history.push('/my-reservation');
-
-        // TODO: Запрос на сервер ДОБАВИТЬ АВТО
-        /*
-        fetch(`/reservation?userId=${context.props.store.user.id}`,
+        // TODO: Запрос на сервер ДОБАВИТЬ БРОНЬ
+        fetch(`/reservation`,
             {
                 method: 'POST',
                 headers: {
@@ -42,21 +40,21 @@ class ParkSchema extends React.Component {
                 body: JSON.stringify(obj)
             })
             .then(response => response.json()).then(async function (data) {
-            await context.props.serReservation(context.props.store.reservation.concat(data));
+            await context.props.setFocus(undefined);
+            await context.props.setReservation(context.props.store.reservation.concat(data));
             context.props.history.push('/my-reservation');
         })
             .catch(function (err) {
-                console.log('EXP: ', err);
+                context.props.history.push('/my-reservation');
             });
-         */
     }
 
-    async setFocusElement(id) {
+    async setFocusElement(id) { // Тут мы меняем значение выбранного места
         await this.props.setFocus(id);
         document.getElementById('scrollBlock2').scrollIntoView();
     }
 
-    render() {
+    render() { // Отрисовка компонента
         let context = this;
 
         if(this.props.store.parkSchema !== undefined && this.props.store.focus !== undefined)
@@ -91,7 +89,7 @@ class ParkSchema extends React.Component {
                             </text>
                         </svg>
                     </div>
-                    {this.props.store.focus ?
+                    {this.props.store.focus &&  document.getElementById('date1') ?
                         <div id='scrollBlock2' className='block' style={{width:'780px', marginRight: '0'}}>
                             <h1 style={{textAlign: 'left'}}>Бронирование</h1>
                             <form onSubmit={this.handleSubmit}
@@ -125,6 +123,8 @@ class ParkSchema extends React.Component {
     }
 }
 
+// Конкретное парковочное место
+// В зависимости от состояния, рисуется опреденным цветом
 class ParkingPlace extends React.Component {
     constructor(props) {
         super(props);

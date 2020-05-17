@@ -4,6 +4,7 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import actions from "../../actions.jsx";
 
+// Блок с отображением Яндекс-карты
 class MyMap extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +18,7 @@ class MyMap extends React.Component {
         this.getXY();
     }
 
-    getXY() {
+    getXY() { // Получаем координаты парковки с сервера
         if(!this.props.store.parkXY) {
             let context = this;
 
@@ -31,7 +32,7 @@ class MyMap extends React.Component {
         }
     }
 
-    render() {
+    render() { // Отрисовываем компонент
         if(this.props.store.parkXY !== undefined) {
             let x = this.props.store.parkXY.split(' ')[0],
                 y = this.props.store.parkXY.split(' ')[1];
@@ -45,10 +46,7 @@ class MyMap extends React.Component {
                     justifyContent: 'space-between'
                 }}>
                     <YMaps>
-                        <div width='50%'>
-                            Описание
-                        </div>
-                        <Map defaultState={{center: [x, y], zoom: 15}} width='50%'>
+                        <Map defaultState={{center: [x, y], zoom: 15}} width='100%'>
                             <Placemark defaultGeometry={[x, y]}/>
                         </Map>
                     </YMaps>

@@ -5,8 +5,7 @@ import actions from "../../actions.jsx";
 import LoginField from "../Material/LoginField.jsx";
 import LoginButton from "../Material/LoginButton.jsx";
 
-let x = 1;
-
+// Компонент с формой для добавления автомобиля
 class Autos extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +23,7 @@ class Autos extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onMarkChange(e) {
+    onMarkChange(e) { // Проверка марки на корректность ввода
         let val = e.target.value,
             regexp = /^[ a-zA-Zа-яА-Я]{1,20}$/,
             errors = this.state.errors.filter((el) => el.errorCode !== 1 && el.errorCode !== 4);
@@ -37,7 +36,7 @@ class Autos extends React.Component {
         }
     }
 
-    onModelChange(e) {
+    onModelChange(e) { // Проверка модели на корректность ввода
         let val = e.target.value,
             regexp = /^[0-9a-zA-Zа-яА-Я ]{1,20}$/,
             errors = this.state.errors.filter((el) => el.errorCode !== 2);
@@ -51,7 +50,7 @@ class Autos extends React.Component {
         }
     }
 
-    onNumberChange(e) {
+    onNumberChange(e) { // Проверка номера на корректность ввода
         let val = e.target.value,
             regexp = /^[0-9a-zA-Zа-яА-Я\- ]{1,10}$/,
             errors = this.state.errors.filter((el) => el.errorCode !== 3);
@@ -65,10 +64,11 @@ class Autos extends React.Component {
         }
     }
 
-    async handleSubmit(e) {
+    async handleSubmit(e) { //Отправка формы на сервер
         e.preventDefault();
 
         if(this.state.errors.length === 0) {
+            // Считываем данные с формы
             let context = this,
                 obj = {
                     mark: e.target.mark.value,
@@ -91,7 +91,6 @@ class Autos extends React.Component {
                     context.setState({errors: data});
                 }
                 else {
-                    console.log(data);
                     await context.props.addAuto(context.props.store.autos.concat(data[0].auto));
                     document.autoForm.reset();
                 }
@@ -102,7 +101,7 @@ class Autos extends React.Component {
         }
     }
 
-    render() {
+    render() { // Отрисовка компонента
         return (
             <div className='block' style={{width:'780px', marginRight: '0'}}>
                 <h1 style={{margin: '0', textAlign: 'left'}}>Добавить автомобиль</h1>

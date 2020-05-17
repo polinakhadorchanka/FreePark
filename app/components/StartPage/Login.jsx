@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom"
 import LoginField from '../Material/LoginField.jsx';
 import LoginButton from '../Material/LoginButton.jsx';
 
+// Тут форма логина, с методами на проверку корректности ввода
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +52,7 @@ class Login extends React.Component {
         }
     }
 
-    handleSubmit(e) {
+    handleSubmit(e) { // Тут мы отправляем форму на сервер, если все хорошо, заходим в акк, если нет, то нет)
         e.preventDefault();
 
         if(this.state.errors.length === 0) {
@@ -73,7 +74,6 @@ class Login extends React.Component {
                 })
                 .then(response => response.json()).then(async function (data) {
                 if (data[0] && data[0].errorCode > 0) {
-                    console.log('1', data);
                     context.setState({errors: data});
                 }
                 else {

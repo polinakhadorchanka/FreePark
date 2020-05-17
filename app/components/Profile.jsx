@@ -4,6 +4,7 @@ import PersonalInfo from "./Profile/PersonalInfo.jsx";
 import Autos from "./Profile/Autos.jsx";
 import AutoForm from "./Profile/AutoForm.jsx";
 
+// Тут родительский комопонент для профиля. Слева - меню, Справа - все остальное
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
